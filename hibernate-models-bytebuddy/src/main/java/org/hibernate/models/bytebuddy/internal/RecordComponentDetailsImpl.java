@@ -156,4 +156,5 @@ public class RecordComponentDetailsImpl
 	public MutableClassDetails asClassDetails() {
 		throw new IllegalCastException( "FieldDetails cannot be cast to a ClassDetails" );
 	}
+
 }

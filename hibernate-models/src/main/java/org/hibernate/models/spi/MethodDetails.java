@@ -74,4 +74,19 @@ public interface MethodDetails extends MemberDetails {
 		return this;
 	}
 
+	/**
+	 * Provides reverse navigational access to this {@link MethodDetails}' owning {@link RecordComponentDetails}.
+	 * @return the RecordComponentDetails object that owns this MethodDetails.
+	 */
+	default RecordComponentDetails getCorrespondingRecordComponent() {
+		if ( !getDeclaringType().isRecord() ) {
+			return null;
+		}
+		// record accessors don't follow the JavaBean get/is naming convention, so JdkBuilders classifies them as MethodKind.OTHER
+		if ( !getArgumentTypes().isEmpty() ) {
+			return null;
+		}
+		return getDeclaringType().findRecordComponentByName( getName() );
+	}
+
 }

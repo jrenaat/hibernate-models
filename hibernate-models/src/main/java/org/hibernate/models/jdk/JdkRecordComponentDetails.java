@@ -125,4 +125,5 @@ public class JdkRecordComponentDetails extends AbstractJdkAnnotationTarget
 	public <A extends Annotation> AnnotationDescriptor<A> asAnnotationDescriptor() {
 		throw new IllegalCastException( "RecordComponentDetails cannot be cast as AnnotationDescriptor" );
 	}
+
 }
