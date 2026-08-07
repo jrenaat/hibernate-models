@@ -48,4 +48,16 @@ public interface FieldDetails extends MemberDetails {
 	default FieldDetails asFieldDetails() {
 		return this;
 	}
+
+	/**
+	 * Provides reverse navigational access to this {@link FieldDetails}' owning {@link RecordComponentDetails}.
+	 * @return the RecordComponentDetails object that owns this FieldDetails.
+	 */
+	default RecordComponentDetails getCorrespondingRecordComponent() {
+		if ( !getDeclaringType().isRecord() ) {
+			return null;
+		}
+		return getDeclaringType().findRecordComponentByName( getName() );
+	}
+
 }

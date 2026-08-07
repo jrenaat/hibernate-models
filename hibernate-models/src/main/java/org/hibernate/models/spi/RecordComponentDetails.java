@@ -50,4 +50,31 @@ public interface RecordComponentDetails extends MemberDetails {
 		return this;
 	}
 
+	/**
+	 * Provide forward navigational support to a Record's backing field, such that consumers of this API do
+	 * not have to correlate it manually through name-matching.
+	 * @return The {@link FieldDetails) object that represents a Record's internal backing field
+	 * @apiNote implementors can override this default implementation if they have access to a more efficient way of
+	 * obtaining the required FieldDetails.
+	 */
+	default FieldDetails getField() {
+		return getDeclaringType().findFieldByName( getName() );
+	}
+
+	/**
+	 * Provide forward navigational support to the Record's backing field accessor method, such that consumers of this API do
+	 * not have to correlate it manually through method signature matching.
+	 * @return The {@link MethodDetails) object that represents the Record's internal field accessor
+	 * @apiNote implementors can override this default implementation if they have access to a more efficient way of
+	 * obtaining the required MethodDetails.
+	 */
+	default MethodDetails getAccessor() {
+		for ( MethodDetails method : getDeclaringType().getMethods() ) {
+			if ( method.getName().equals( getName() ) && method.getArgumentTypes().isEmpty() ) {
+				return method;
+			}
+		}
+		return null;
+	}
+
 }
